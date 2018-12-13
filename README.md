@@ -1,5 +1,5 @@
 # Hangman
-Written using Python 3.4.3
+#Written using Python 3.6.1
 
 A terminal based version of the classic multiplayer game Hangman.
 
