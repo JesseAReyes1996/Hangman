@@ -7,7 +7,7 @@ import sys
 from time import sleep
 from _thread import *
 
-WORDS = ["rain","apple","soft","gypsy","beyond","escape","eclipse","opossum","gryffindor"]
+WORDS = ["rain","apple","soft","gypsy","beyond","escape","eclipse","opossum","gryffindor","trailer"]
 
 CLIENTS = {} #conn.fileno():conn
 USERNAMES = [] #List of usernames
@@ -89,9 +89,9 @@ def formatLayout(guesses, incorrectGuesses, users, turn):
     #Print players who are playing and also whose turn it is
     for idxI, i in enumerate(users):
         if(idxI == turn):
-            layout += CONNECTEDUSERS[i] + '*' + '\n'
+            layout += CONNECTEDUSERS[i].capitalize() + '*' + '\n'
         else:
-            layout += CONNECTEDUSERS[i] + '\n'
+            layout += CONNECTEDUSERS[i].capitalize() + '\n'
     #In the event that all users lost, don't send extra newline
     if(users):
         layout += "\n"
@@ -120,7 +120,7 @@ def joinGame(conn, host):
 
 def newGame(difficulty, conn):
     #word = random.choice(WORDS)TODO
-    word = "apple"
+    word = "trailer"
     if(difficulty == "1"):
         guessesAllowed = len(word) * 3
     elif(difficulty == "2"):
@@ -179,7 +179,7 @@ def newGame(difficulty, conn):
             continue
 
         #Give each player a turn to guess
-        print(turn)#TODO
+        #print(turn)#TODO
         playerTurn = CONNECTEDUSERS[GAMESLIST[host][turn]]
         #Increment only if the player whose turn it is guessed
         if((playerTurn == guess.split('|')[1])):
@@ -436,6 +436,7 @@ def serverThread():
 
     while True:
         clear()
+        print("Server Admin Menu")
         print("1. Current list of connected users")
         print("2. Current list of registered users")
         print("3. Current list of words")
