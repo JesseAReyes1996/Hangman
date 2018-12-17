@@ -13,6 +13,7 @@ CLIENTS = {} #conn.fileno():conn
 USERNAMES = [] #List of usernames
 CONNECTEDUSERS = {} #conn:username
 USERCONN = {} #username:conn
+SCORE = {} #username:score
 PASSWORDS = {} #username:password
 GAMESLIST = {} #Host name:list of conns in game
 GUESSDICT = {} #Host name:list of guesses from users in game
@@ -89,9 +90,9 @@ def formatLayout(guesses, incorrectGuesses, users, turn):
     #Print players who are playing and also whose turn it is
     for idxI, i in enumerate(users):
         if(idxI == turn):
-            layout += CONNECTEDUSERS[i].capitalize() + '*' + '\n'
+            layout += CONNECTEDUSERS[i].capitalize() + ' ' + str(SCORE[CONNECTEDUSERS[i]]) + ' *' + '\n'
         else:
-            layout += CONNECTEDUSERS[i].capitalize() + '\n'
+            layout += CONNECTEDUSERS[i].capitalize() + ' ' + str(SCORE[CONNECTEDUSERS[i]]) + '\n'
     #In the event that all users lost, don't send extra newline
     if(users):
         layout += "\n"
@@ -104,6 +105,8 @@ def joinGame(conn, host):
         sleep(0.1)
     #Insert user into game of their choice
     GAMESLIST[host].append(conn)
+    #Give the connecting user a score of 0
+    SCORE[CONNECTEDUSERS[conn]] = 0
     #Make the connection non-blocking
     conn.setblocking(False)
     clientSend("Waiting to join...", conn)
@@ -165,6 +168,10 @@ def newGame(difficulty, conn):
                 guess = i
 
         #When screen is cleared, user input is not cleared TODO
+
+        #BUG TODO
+        #starter a l
+        #joiner guesses full word
 
         #No guesses have been made
         if(guess == 'Ø'):
@@ -229,9 +236,10 @@ def newGame(difficulty, conn):
                     #Replace underscore with correct letter
                     guesses[position] = guess
                 position += 1
-            #User gets to guess again
+            #User gets to guess again and score is increased by one
             if(inWord):
                 turn -= 1
+                SCORE[user] += 1
             #Check to see if user has correctly guessed the word
             check = ""
             for i in guesses:
@@ -287,8 +295,9 @@ def newGame(difficulty, conn):
     if(win):
         #Send message to users telling them who won
         #Send final state of the game before user won
+        SCORE[winner] += len(word)
         layout = formatLayout(guesses, incorrectGuesses, GAMESLIST[host], turn)
-        layout += winner + " Won"
+        layout += winner.capitalize() + " Won"
         print(GAMESLIST[host]) #TODO
         for i in GAMESLIST[host]:
             clear(i)
