@@ -10,5 +10,6 @@ To run this game open up a minimum of two terminals. One terminal should be in t
 
 Run "python server.py" in one of the open terminals.
 
-The other terminal will connect to the server using telnet.
+The other terminal will connect to the server using Telnet.
+
 Use the command "telnet localhost 8238" to connect to the server.
