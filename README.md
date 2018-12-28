@@ -2,7 +2,7 @@
 
 Written using Python 3.6.1
 
-A terminal-based version of the classic multiplayer game Hangman. This project is meant to showcase my knowledge of threading as well as blocking/non-blocking sockets. The game is run by a server and clients connect to the server via Telnet. The server supports running multiple games at a time.
+A terminal-based version of the classic multiplayer game Hangman. This project is meant to showcase my knowledge of concurrency (e.g. the Thread-local storage (TLS) concurrency pattern) as well as TCP/IP. The game is run by a server and clients connect to the server via Telnet. The server supports running multiple games at a time.
 
 ![](./images/hangman.png)
 
