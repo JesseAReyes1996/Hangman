@@ -8,8 +8,8 @@ A terminal-based version of the classic multiplayer game Hangman. This project i
 
 To run this game open up a minimum of two terminals. One terminal should be in the same directory as server.py.
 
-Run "python server.py" in one of the open terminals.
+Run ```python server.py``` in the terminal that is in the same directory as ```server.py```
 
 The other terminal will connect to the server using Telnet.
 
-Use the command "telnet localhost 8238" to connect to the server.
+Use the command ```telnet localhost 8238``` to connect to the server.
